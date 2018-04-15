@@ -28,7 +28,7 @@ inquirer.prompt([
     {
         name: "oldBodyWeight",
         type: "input",
-        message: "LEAN BODY MASS OPTIMIZER\n------------------------\nEnter your weight 7 days ago: "
+        message: "\n\nLEAN BODY MASS OPTIMIZER\n\nEnter your weight 7 days ago: "
     },
     {
         name: "oldBodyFatPercentage",
@@ -71,7 +71,7 @@ inquirer.prompt([
         differenceInLBM = newLBM - oldLBM;
         console.log("Difference in lean mass: "+ differenceInLBM);
         percentLBMChange = Math.round(differenceInLBM / weightChange * 100);
-        percentFatChange = 100 - percentLBMChange;
+        percentFatChange = Math.round((newBodyFat - oldBodyFat) / weightChange * 100);
         console.log("Weight change: " + weightChange);
         console.log("Lean body mass change: " + differenceInLBM);
         console.log("Percent lean body mass change: " + percentLBMChange);
