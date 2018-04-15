@@ -23,7 +23,7 @@ var differenceInLBM;
 var percentFatChange;
 var percentLBMChange;
 var recommendedCalories; // recommended daily calories for the upcoming week
-
+  
 inquirer.prompt([
     {
         name: "oldBodyWeight",
@@ -65,9 +65,12 @@ inquirer.prompt([
     if (Math.abs(newWeight - oldWeight) > 0 || Math.abs(newBodyFat - oldBodyFat) > 0){
         weightChange = newWeight - oldWeight;
         oldLBM = (oldWeight * (100 - oldBodyFat) / 100);
+        console.log("Old lean body mass: " + oldLBM);
         newLBM = (newWeight * (100 - newBodyFat) / 100);
+        console.log("New lean body mass: " + newLBM);
         differenceInLBM = newLBM - oldLBM;
-        percentLBMChange = differenceInLBM / weightChange;
+        console.log("Difference in lean mass: "+ differenceInLBM);
+        percentLBMChange = Math.round(differenceInLBM / weightChange * 100);
         percentFatChange = 100 - percentLBMChange;
         console.log("Weight change: " + weightChange);
         console.log("Lean body mass change: " + differenceInLBM);
@@ -115,10 +118,8 @@ inquirer.prompt([
         console.log("Target maintenance calories this week: " + averageDailyCalories);
         console.log("You can add or subtract 100 from this number if your goal is to gain or lose weight.");
     }
-    var newDate = new Date();
-    newDate.setDate(newDate.getDate() + 7);
-    console.log("Next log date: " + newDate); 
-    var line = new Date.toLocaleString() + " " + newWeight + " " + newBodyFat + " " + averageDailyCalories + " " + percentLBMChange + " " + percentFatChange + " " + recommendedCalories + "\r\n";
+    console.log("Next log date is 7 days from today.");
+    var line = new Date().toLocaleString() + ": " + newWeight + " lb. " + newBodyFat + "% BF " + averageDailyCalories + " cal/day " + percentLBMChange + "% LBM " + percentFatChange + "% BF " + recommendedCalories + " recommended\r\n";
     fs.appendFileSync('log.txt', line);
 });
 
