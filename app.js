@@ -1,4 +1,3 @@
-import { access } from 'fs';
 
 // get last week's weight and body fat readings
 // get calorie totals for the past 7 days
@@ -27,7 +26,7 @@ var recommendedCalories; // recommended daily calories for the upcoming week
 
 inquirer.prompt([
     {
-        name: "oldBodyWeight"
+        name: "oldBodyWeight",
         type: "input",
         message: "LEAN BODY MASS OPTIMIZER\n------------------------\nEnter your weight 7 days ago: "
     },
@@ -39,7 +38,7 @@ inquirer.prompt([
     {
         name: "calories",
         type: "input",
-        message: "Enter your calories per day for the past 7 days (separated by commas): "
+        message: "Enter your calories per day for the past 7 days (separated by commas only): "
     },
     {
         name: "newBodyWeight",
@@ -51,10 +50,10 @@ inquirer.prompt([
         type: "input",
         message: "Enter your body fat percentage today: "
     }
-]).then(function (answers)){
+]).then(function (answers){
     oldWeight = parseFloat(answers.oldBodyWeight);
     oldBodyFat = parseFloat(answers.oldBodyFatPercentage);
-    caloriesEachDay = answers.calories.split();
+    caloriesEachDay = answers.calories.split(',');
     for (var i = 0; i < 7; i++){
         totalCaloriesPerWeek += parseInt(caloriesEachDay[i]);
     }
@@ -121,7 +120,7 @@ inquirer.prompt([
     console.log("Next log date: " + newDate); 
     var line = new Date.toLocaleString() + " " + newWeight + " " + newBodyFat + " " + averageDailyCalories + " " + percentLBMChange + " " + percentFatChange + " " + recommendedCalories + "\r\n";
     fs.appendFileSync('log.txt', line);
-}
+});
 
 // write to log.txt:
 // - date
